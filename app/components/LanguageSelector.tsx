@@ -6,16 +6,16 @@ type Language = "ta" | "en";
 
 type Props = {
   selected: Language;
-  onSelect: (lang: Language) => void;
+  onChange: (lang: Language) => void;
 };
 
-export default function LanguageSelector({ selected, onSelect }: Props) {
+export default function LanguageSelector({ selected, onChange }: Props) {
   return (
     <div style={{ marginBottom: "20px" }}>
       <h3>Select Language</h3>
 
-      <button onClick={() => onSelect("ta")}>தமிழ்</button>{" "}
-      <button onClick={() => onSelect("en")}>English</button>{" "}
+      <button onClick={() => onChange("ta")}>தமிழ்</button>{" "}
+     
       
     </div>
   );
