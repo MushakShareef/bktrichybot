@@ -1,6 +1,8 @@
 "use client";
 
-import type { Language } from "../types";
+
+type Language = "ta" | "en";
+
 
 type Props = {
   selected: Language;
@@ -14,7 +16,7 @@ export default function LanguageSelector({ selected, onSelect }: Props) {
 
       <button onClick={() => onSelect("ta")}>தமிழ்</button>{" "}
       <button onClick={() => onSelect("en")}>English</button>{" "}
-      <button onClick={() => onSelect("hi")}>हिंदी</button>
+      
     </div>
   );
 }
