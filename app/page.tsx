@@ -21,15 +21,15 @@ export default function Home() {
         >
           <h1 
             style={{
-              fontSize: "26px",
+              fontSize: "20px",
               marginBottom: "8px",
-              fontWeight: 700,
+              fontWeight: 600,
             }}
                     >
             பிரம்மா குமாரிகள் – ஞான போட்
           </h1>
 
-          <p className="text-[16px] text-[#555] mb-6">
+          <p className="text-[12px] text-[#555] mb-6">
             ஆன்மிக ஞானத்திற்கான ஒரு அமைதியான வழிகாட்டி
           </p>
 

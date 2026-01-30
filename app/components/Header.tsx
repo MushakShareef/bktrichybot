@@ -165,7 +165,8 @@ export default function Header() {
               alignSelf: "center",   // 👈 centers THIS item only
               padding: "12px",
               borderRadius: "8px",
-              background: "#f9f9f9",
+              background: "#8903ef",
+              color: "#fff",
               fontWeight: "600",
               width: "100%",
             }}
