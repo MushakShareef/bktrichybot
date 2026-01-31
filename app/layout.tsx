@@ -1,6 +1,9 @@
 import "./globals.css";
 import type { ReactNode } from "react";
 import Header from "./components/Header";
+import { Analytics } from "@vercel/analytics/next"
+import PwaInstallTracker from "./components/PwaInstallTracker";
+import PwaTracker from "./components/PwaTracker";
 
 export const metadata = {
   title: "Brahma Kumaris – Gyan Bot",
@@ -9,10 +12,13 @@ export const metadata = {
   themeColor: "#8903ef",
 };
 
+
+
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ta">
-      <body style={{ margin: 0 }}>
+      <body className="m-0">
         <Header />
         <main
           style={{
@@ -22,6 +28,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         >
           {children}
+          {/* PWA install tracking */}
+          <PwaInstallTracker />
+          {/* PWA tracking */}
+          <PwaTracker />
+
+        {/* Vercel analytics */}
+          <Analytics />
         </main>
       </body>
     </html>

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import SpiritualBot from "./components/SpiritualBot";
 
+
+
 export default function Home() {
   const [showMobileBot, setShowMobileBot] = useState(false);
 
@@ -12,13 +14,8 @@ export default function Home() {
       <div className="flex flex-col sm:flex-row gap-5 items-start">
         
         {/* ===== Landing Content ===== */}
-        <main className="w-full lg:w-[70%] p-5 leading-[1.8]"
-                style={{
-            background: "rgba(137, 3, 239, 0.03)",
-            borderRadius: "12px",
-            color: "#2f2f2f",
-          }}
-        >
+        <main className="w-full lg:w-[70%] p-5 leading-[1.8] rounded-xl bg-[var(--card)]">
+
           <h1 
             style={{
               fontSize: "20px",
@@ -29,7 +26,7 @@ export default function Home() {
             பிரம்மா குமாரிகள் – ஞான போட்
           </h1>
 
-          <p className="text-[12px] text-[#555] mb-6">
+          <p className="text-[12px] text-[var(--text)] opacity-70 mb-6">
             ஆன்மிக ஞானத்திற்கான ஒரு அமைதியான வழிகாட்டி
           </p>
 
@@ -69,7 +66,7 @@ export default function Home() {
             <strong>உங்களுக்கும், உங்கள் மனதுக்கும் நேரம் இருக்கிறது.</strong>
           </p>
 
-          <p className="mt-8 italic text-[#666]">
+          <p className="mt-8 italic text-[var(--text)] opacity-70">
             சற்று நின்று, சிந்தித்து, உங்களை நினைவுகூருங்கள்.
           </p>
         </main>

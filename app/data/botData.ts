@@ -13,7 +13,7 @@ export type Question = {
 export const botData: Topic[] = [
   {
     id: "rajyoga",
-    title: "ராஜயோகம்",
+    title: "இராஜயோகம்",
     questions: [
       {
         id: "rajyoga1",

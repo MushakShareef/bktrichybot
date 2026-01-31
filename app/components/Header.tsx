@@ -7,14 +7,8 @@ export default function Header() {
 
   return (
     <>
-      <header
-        style={{
-          borderBottom: "1px solid #ffffff",
-          padding: "15px 20px",
-          backgroundColor: "#8903ef",
-          color: "#ffffff",
-        }}
-      >
+      <header className="bg-[var(--brand)] text-white border-b border-white/20 px-5 py-4">
+
         <div
           style={{
             maxWidth: "1100px",
@@ -142,20 +136,18 @@ export default function Header() {
       </header>
 
       {menuOpen && (
-        
-        <div
-          className="mobile-only"
-          style={{
-            width: "100%",
-            padding: "16px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-            gap: "12px",
-            background: "#fff",
-            borderTop: "1px solid #eee",
-          }}
-        >
+          <div
+            className="
+              bg-[var(--bg)]
+              text-[var(--text)]
+              border-t border-[var(--border)]
+              px-4 py-5
+              flex flex-col items-stretch
+              gap-4
+            "
+          >
+
+
           <a
             href="https://spin-wheel-nu-three.vercel.app"
             target="_blank"
@@ -164,27 +156,48 @@ export default function Header() {
               textAlign: "center",   // 👈 centers text
               alignSelf: "center",   // 👈 centers THIS item only
               padding: "12px",
-              borderRadius: "8px",
+              borderRadius: "12px",
               background: "#8903ef",
               color: "#fff",
               fontWeight: "600",
-              width: "100%",
+              width: "90%",
             }}
           >
             Thought for the Day
           </a>
 
-          <a href="/">Home</a>
+          <a
+            href="/"
+            style={{ display: "block" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Home
+          </a>
+
           <a
             href="https://bk-trichy02.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
+            style={{ display: "block" }}
           >
             About Us
           </a>
 
-          <a href="/gallery">Gallery</a>
-          <a href="/address">Address</a><br />
+          <a
+            href="/gallery"
+            style={{ display: "block" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Gallery
+          </a>
+
+          <a
+            href="/address"
+            style={{ display: "block" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Address
+          </a>
           
         </div>
       )}

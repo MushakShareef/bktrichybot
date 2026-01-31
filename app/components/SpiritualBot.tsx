@@ -179,10 +179,17 @@ export default function SpiritualBot({
       {/* ANSWER */}
       {selectedQuestion && (
         <div>
-          <h4>{selectedQuestion.text}</h4>
+          <h4
+            style={{
+              color: "#1e2a38",   // ✅ dark blue with black
+              fontWeight: "600",
+            }}
+          >
+            {selectedQuestion.text}
+          </h4>
           <p
             style={{
-              color: "#8903ef",
+              color: "#8903ef",   // ✅ THIS IS THE FIX
               lineHeight: "1.7",
               fontSize: "14px",
               marginTop: "6px",
