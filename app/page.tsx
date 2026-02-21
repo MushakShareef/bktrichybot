@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SpiritualBot from "./components/SpiritualBot";
 
 
 
 export default function Home() {
   const [showMobileBot, setShowMobileBot] = useState(false);
+
+
+  const [showHint, setShowHint] = useState(false);
+  useEffect(() => {
+  const hasSeenHint = localStorage.getItem("baba_hint_seen");
+  if (!hasSeenHint) {
+    setShowHint(true);
+  }
+}, []);
+
+
 
   return (
     <>
@@ -78,9 +89,80 @@ export default function Home() {
       </div>
 
       {/* ===== Mobile Floating Baba Button ===== */}
+      <style jsx>{`
+        @keyframes bounceSlow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-6px);
+          }
+        }
+        .animate-bounceSlow {
+          animation: bounceSlow 3s ease-in-out infinite;
+        }
+      `}</style>
+
+      <style jsx>{`
+        @keyframes babaGlow {
+          0% {
+            box-shadow: 0 0 0px rgba(137, 3, 239, 0.4);
+            transform: scale(1);
+          }
+          50% {
+            box-shadow: 0 0 16px rgba(137, 3, 239, 0.6);
+            transform: scale(1.05);
+          }
+          100% {
+            box-shadow: 0 0 0px rgba(137, 3, 239, 0.4);
+            transform: scale(1);
+          }
+        }
+
+        .animate-baba-glow {
+          animation: babaGlow 3.5s ease-in-out infinite;
+        }
+      `}</style>
+
+
+
+
+      {showHint && (
+        <div className="sm:hidden fixed bottom-[90px] right-6 z-[1001] flex flex-col items-center animate-bounceSlow w-[42px]">
+
+          
+          {/* Small Baba on top */}
+          <div className="w-full aspect-square rounded-full bg-[#8903ef] shadow flex items-center justify-center mb-1">
+            <img
+              src="/images/baba2.png"
+              alt="Baba Hint"
+              className="w-5 h-5 object-contain"
+            />
+          </div>
+
+          {/* Text bubble */}
+          <div className="bg-[#8903ef] text-white text-xs px-2 py-2 rounded-lg shadow mb-1 flex flex-col items-center leading-tight">
+            <span>A</span>
+            <span>s</span>
+            <span>k</span>
+            <span>m</span>
+            <span>e</span>
+          </div>
+
+
+          {/* Arrow */}
+          <div className="w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-[#8903ef]" />
+        </div>
+      )}
+
+
       <div
-        onClick={() => setShowMobileBot(true)}
-        className="sm:hidden fixed bottom-5 right-5 w-[56px] h-[56px] rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer z-[1000]"
+        onClick={() => {
+          setShowMobileBot(true);
+          setShowHint(false);
+          localStorage.setItem("baba_hint_seen", "yes");
+        }}
+        className="sm:hidden fixed bottom-5 right-5 w-[56px] h-[56px] rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer z-[1000] animate-baba-glow"
         title="Ask Baba"
       >
         <img
