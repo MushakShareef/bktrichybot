@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import { botData, Topic, Question } from "../data/botData";
 
 export default function SpiritualBot({
@@ -10,10 +11,102 @@ export default function SpiritualBot({
 }) {
 
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [stage, setStage] = useState<"welcome" | "invite" | "affirmation" | "calm" | "yogi" | "instruction" | "topics">("welcome");
+  const [calmIndex, setCalmIndex] = useState(0);
+  const [yogiFadeOut, setYogiFadeOut] = useState(false);
+
+    const calmLines = [
+      "Pause yourself for peace.",
+      "No urgent.",
+      "No hurry.",
+      "No fast.",
+      "Calm down yourself.",
+      "Relax."
+    ];
+
+
+  useEffect(() => {
+    if (stage === "welcome") {
+      const timer = setTimeout(() => {
+        setStage("invite");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [stage]);
+
+  useEffect(() => {
+      if (stage === "affirmation") {
+        const timer = setTimeout(() => {
+          setStage("calm");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+      }
+    }, [stage]);
+
+    useEffect(() => {
+      if (stage === "calm" && calmIndex < calmLines.length - 1) {
+        const timer = setTimeout(() => {
+          setCalmIndex(prev => prev + 1);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+      }
+    }, [stage, calmIndex]);
+
+
+    useEffect(() => {
+      if (stage === "calm" && calmIndex === calmLines.length - 1) {
+        const timer = setTimeout(() => {
+          setStage("yogi");
+        }, 2500);
+
+        return () => clearTimeout(timer);
+      }
+    }, [stage, calmIndex]);
+
+
+    useEffect(() => {
+        if (stage === "instruction") {
+          const timer = setTimeout(() => {
+            setStage("topics");
+          }, 3000);
+
+          return () => clearTimeout(timer);
+        }
+      }, [stage]);
+
+
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
     null
   );
   const [expanded, setExpanded] = useState(false);
+  const [visibleTopicCount, setVisibleTopicCount] = useState(0);
+  useEffect(() => {
+      if (stage === "topics" && visibleTopicCount < botData.length) {
+        const timer = setTimeout(() => {
+          setVisibleTopicCount(prev => prev + 1);
+        }, 800);
+
+        return () => clearTimeout(timer);
+      }
+    }, [stage, visibleTopicCount]);
+      
+  const [visibleQuestionCount, setVisibleQuestionCount] = useState(0);
+  useEffect(() => {
+      if (selectedTopic && visibleQuestionCount < selectedTopic.questions.length) {
+        const timer = setTimeout(() => {
+          setVisibleQuestionCount(prev => prev + 1);
+        }, 800);
+
+        return () => clearTimeout(timer);
+      }
+    }, [selectedTopic, visibleQuestionCount]);
+
+
+
+
 
   return (
     <div
@@ -129,9 +222,75 @@ export default function SpiritualBot({
       )}
 
       {/* TOPICS */}
-      {!selectedTopic && (
+      {(stage === "welcome" || stage === "invite") && (
+      <div className="flex flex-col items-center justify-center h-full min-h-[300px]">
+
+        <div className="text-center text-lg md:text-xl text-[#8903ef] animate-slowFadeIn mb-8">
+          Welcome. Hope all is well.
+        </div>
+
+        <div className="h-[40px] flex items-center justify-center">
+          <button
+            onClick={() => setStage("affirmation")}
+            className={`px-6 py-2 rounded-full bg-[#8903ef] text-white text-sm md:text-base shadow-md transition-opacity duration-1000 cursor-pointer ${
+              stage === "invite" ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            Shall we begin?
+          </button>
+        </div>
+
+      </div>
+    )}
+    {stage === "affirmation" && (
+      <div className="flex items-center justify-center h-full min-h-[300px]">
+        <div className="text-center text-lg md:text-xl text-[#8903ef] animate-slowFadeIn">
+          Great… Let us walk slowly together.
+        </div>
+      </div>
+    )}
+
+
+
+    {stage === "calm" && (
+        <div className="flex items-center justify-center h-full min-h-[300px]">
+          <div className="text-center text-lg md:text-xl text-[#8903ef] animate-slowFadeIn">
+            {calmLines[calmIndex]}
+          </div>
+        </div>
+      )}
+
+      {stage === "yogi" && (
+        <div className="flex items-center justify-center h-full min-h-[300px]">
+          <video
+            src="/videos/yogi.mp4"
+            autoPlay
+            muted
+            playsInline
+            onEnded={() => {
+              setYogiFadeOut(true);
+              setTimeout(() => {
+                setStage("instruction");
+              }, 3000);
+            }}
+            className={`w-64 md:w-80 ${
+              yogiFadeOut ? "animate-slowFadeOut" : "animate-slowFadeIn"
+            }`}
+          />
+        </div>
+      )}
+
+      {stage === "instruction" && (
+        <div className="flex items-center justify-center h-full min-h-[300px]">
+          <div className="text-center text-lg md:text-xl text-[#8903ef] animate-slowFadeIn">
+            When ready, choose your topic.
+          </div>
+        </div>
+      )}
+                
+      {stage === "topics" && !selectedTopic && (
         <div>
-          {botData.map((topic) => (
+          {botData.slice(0, visibleTopicCount).map((topic, index) => (
             <div
               key={topic.id}
               style={{
@@ -144,7 +303,10 @@ export default function SpiritualBot({
                 color: "#8903ef",
                 boxShadow: "0 2px 6px rgba(137,3,239,0.12)",
               }}
-              onClick={() => setSelectedTopic(topic)}
+              onClick={() => {
+                setSelectedTopic(topic);
+                setVisibleQuestionCount(0);
+              }}
             >
               {topic.title}
             </div>
@@ -155,7 +317,7 @@ export default function SpiritualBot({
       {/* QUESTIONS */}
       {selectedTopic && !selectedQuestion && (
         <div>
-          {selectedTopic.questions.map((q) => (
+          {selectedTopic.questions.slice(0, visibleQuestionCount).map((q) => (
             <div
               key={q.id}
               style={{
